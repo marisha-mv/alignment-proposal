@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Company Alignment — A Proposal to Vishen + Executives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f4f1ea;
+    --paper-warm: #ebe5d6;
+    --red: #c8321a;
+    --red-soft: #f5d5cd;
+    --amber: #d49418;
+    --amber-soft: #f5e6c6;
+    --green: #2e7d4f;
+    --green-soft: #cfe3d5;
+    --muted: #6b6658;
+    --accent: #1a3a5c;
+    --accent-soft: #dae4ef;
+    --rule: #0a0a0a;
+    --hairline: rgba(10,10,10,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/><feColorMatrix values='0 0 0 0 0.04 0 0 0 0 0.04 0 0 0 0 0.04 0 0 0 0.35 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: multiply;
+  }
+
+  .deck { min-height: 100vh; display: flex; flex-direction: column; }
+  .slide {
+    display: none;
+    min-height: 100vh;
+    padding: 64px 80px 140px;
+    animation: slideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .slide.active { display: flex; flex-direction: column; }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 48px;
+  }
+  .slide-meta .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .slide-meta .counter {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  h1.display {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(56px, 8vw, 128px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+  }
+  h1.display em { font-style: italic; font-weight: 300; color: var(--red); }
+  h2.section-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(36px, 4.5vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  h2.section-title em { font-style: italic; font-weight: 400; }
+  h3 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  p, li { font-size: 17px; line-height: 1.55; color: var(--ink); }
+  p.lede {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(22px, 2.5vw, 30px);
+    line-height: 1.35;
+    font-weight: 400;
+    max-width: 900px;
+  }
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .mono-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    font-weight: 400;
+    margin-left: 12px;
+    text-transform: uppercase;
+  }
+
+  .nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    border-top: 1px solid var(--paper);
+  }
+  .nav-btn {
+    background: none;
+    border: 1px solid var(--paper);
+    color: var(--paper);
+    padding: 10px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover:not(:disabled) { background: var(--paper); color: var(--ink); }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .nav-progress {
+    flex: 1;
+    margin: 0 32px;
+    height: 2px;
+    background: rgba(244,241,234,0.2);
+    position: relative;
+  }
+  .nav-progress-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: var(--paper);
+    transition: width 0.4s ease;
+  }
+  .nav-counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+  }
+
+  .toc-toggle {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 10px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    z-index: 101;
+  }
+  .toc {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 420px;
+    max-width: 90vw;
+    height: 100vh;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 40px 40px;
+    z-index: 100;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    overflow-y: auto;
+  }
+  .toc.open { transform: translateX(0); }
+  .toc h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(244,241,234,0.5);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(244,241,234,0.2);
+  }
+  .toc-item {
+    display: flex;
+    gap: 16px;
+    padding: 12px 0;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(244,241,234,0.08);
+    transition: padding-left 0.2s;
+  }
+  .toc-item:hover { padding-left: 8px; }
+  .toc-item .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(244,241,234,0.4);
+    min-width: 24px;
+  }
+  .toc-item .title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    line-height: 1.3;
+  }
+  .toc-item.active .title { font-style: italic; color: #f4c430; }
+
+  .cover {
+    justify-content: space-between;
+    background:
+      radial-gradient(circle at 15% 85%, rgba(200,50,26,0.08), transparent 40%),
+      radial-gradient(circle at 85% 15%, rgba(26,58,92,0.06), transparent 40%),
+      var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cover-mid {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 1400px;
+  }
+  .cover-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(64px, 10vw, 168px);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+  }
+  .cover-title .line2 { display: block; font-style: italic; font-weight: 400; color: var(--red); }
+  .cover-title .line3 { display: block; font-weight: 500; }
+  .cover-sub {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 32px;
+    max-width: 760px;
+    line-height: 1.4;
+  }
+  .cover-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 40px;
+    border-top: 1px solid var(--ink);
+    margin-top: 40px;
+  }
+  .cover-foot-item .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .cover-foot-item .value {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .callout { padding: 28px 32px; margin: 24px 0; position: relative; }
+  .callout.red { background: var(--red-soft); border-left: 4px solid var(--red); }
+  .callout.amber { background: var(--amber-soft); border-left: 4px solid var(--amber); }
+  .callout.green { background: var(--green-soft); border-left: 4px solid var(--green); }
+  .callout.accent { background: var(--accent-soft); border-left: 4px solid var(--accent); }
+  .callout .callout-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+  .callout .callout-body {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 400;
+  }
+
+  .numbered-list { display: flex; flex-direction: column; gap: 28px; margin: 32px 0; }
+  .numbered-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 24px;
+    align-items: baseline;
+  }
+  .numbered-item .num {
+    font-family: 'Fraunces', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: var(--red);
+    line-height: 1;
+    font-style: italic;
+  }
+  .numbered-item .body h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    line-height: 1.2;
+    text-transform: none;
+    letter-spacing: -0.01em;
+  }
+
+  .data-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+  .data-table th, .data-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: top;
+  }
+  .data-table th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--ink);
+  }
+  .data-table td { font-size: 14px; line-height: 1.4; }
+  .data-table tr:hover { background: rgba(10,10,10,0.02); }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+  .chip.red { background: var(--red); color: white; }
+  .chip.amber { background: var(--amber); color: white; }
+  .chip.green { background: var(--green); color: white; }
+  .chip.ink { background: var(--ink); color: var(--paper); }
+  .chip.ghost { background: transparent; border: 1px solid var(--ink); color: var(--ink); }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin: 32px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+  @media (max-width: 900px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
+  .stat { padding: 24px 20px; border-right: 1px solid var(--hairline); }
+  .stat:last-child { border-right: none; }
+  .stat .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .stat .value {
+    font-family: 'Fraunces', serif;
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stat .value.red { color: var(--red); }
+  .stat .value.amber { color: var(--amber); }
+  .stat .value.green { color: var(--green); }
+  .stat .delta {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .pullquote {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1.15;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink);
+    max-width: 1100px;
+    margin: 40px 0;
+    padding-left: 32px;
+    border-left: 2px solid var(--red);
+  }
+  .pullquote .attribution {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-style: normal;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 24px;
+  }
+
+  .rag-red { color: var(--red); font-weight: 700; }
+  .rag-amber { color: var(--amber); font-weight: 700; }
+  .rag-green { color: var(--green); font-weight: 700; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 32px 0; }
+  @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 32px 0; }
+  @media (max-width: 900px) { .grid-3 { grid-template-columns: 1fr; } }
+
+  .tier {
+    border: 1px solid var(--ink);
+    background: var(--paper-warm);
+    padding: 28px;
+    position: relative;
+  }
+  .tier.green { background: #eef5e8; border-color: var(--green); }
+  .tier.accent { background: #e8eef5; border-color: var(--accent); }
+  .tier.red { background: var(--red-soft); border-color: var(--red); }
+  .tier .tier-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    color: var(--muted);
+  }
+  .tier h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    line-height: 1.15;
+    text-transform: none;
+    letter-spacing: -0.01em;
+  }
+  .tier ul { padding-left: 18px; }
+  .tier li { font-size: 14px; line-height: 1.5; padding: 4px 0; }
+
+  @media print {
+    .slide { display: block !important; page-break-after: always; }
+    .nav, .toc-toggle, .toc { display: none !important; }
+  }
+
+  .kbd-hint {
+    position: fixed;
+    bottom: 76px;
+    left: 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    pointer-events: none;
+    opacity: 0.6;
+    z-index: 50;
+  }
+
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+</style>
+</head>
+<body>
+
+<button class="toc-toggle" id="tocToggle">Contents →</button>
+
+<nav class="toc" id="toc">
+  <h4>Contents · 10 slides</h4>
+  <div class="toc-item" data-slide="0"><span class="num">00</span><span class="title">Cover</span></div>
+  <div class="toc-item" data-slide="1"><span class="num">01</span><span class="title">The state we're in</span></div>
+  <div class="toc-item" data-slide="2"><span class="num">02</span><span class="title">EBITDA grows by concentration</span></div>
+  <div class="toc-item" data-slide="3"><span class="num">03</span><span class="title">The 14 priorities</span></div>
+  <div class="toc-item" data-slide="4"><span class="num">04</span><span class="title">By the end — three things</span></div>
+  <div class="toc-item" data-slide="5"><span class="num">05</span><span class="title">How — each exec runs it</span></div>
+  <div class="toc-item" data-slide="6"><span class="num">06</span><span class="title">The core team + redeploy targets</span></div>
+  <div class="toc-item" data-slide="7"><span class="num">07</span><span class="title">The rhythm — Daily Huddle + Tue/Thu</span></div>
+  <div class="toc-item" data-slide="8"><span class="num">08</span><span class="title">Timeline — four weeks</span></div>
+  <div class="toc-item" data-slide="9"><span class="num">09</span><span class="title">Four asks of this room</span></div>
+</nav>
+
+<div class="deck" id="deck">
+
+<!-- ─── SLIDE 0 · COVER ────────────────────────────────────── -->
+<section class="slide active cover">
+  <div class="cover-mark">Mindvalley · Alignment Proposal · For Vishen + Executives</div>
+
+  <div class="cover-mid">
+    <h1 class="cover-title">
+      600 projects.<span class="line2">We can't afford</span><span class="line3">that anymore.</span>
+    </h1>
+    <p class="cover-sub">
+      A proposal to align the company around <em>14 priorities</em>, audit every project and every person against them, and identify <em>the core Mindvalley team</em> needed to execute the baseline now.
+    </p>
+  </div>
+
+  <div class="cover-foot">
+    <div class="cover-foot-item">
+      <div class="label">Prepared by</div>
+      <div class="value">Marisha Lakhiani</div>
+    </div>
+    <div class="cover-foot-item">
+      <div class="label">For</div>
+      <div class="value">Vishen + Executives</div>
+    </div>
+    <div class="cover-foot-item">
+      <div class="label">Effective</div>
+      <div class="value">Week 1, this quarter</div>
+    </div>
+    <div class="cover-foot-item">
+      <div class="label">Version</div>
+      <div class="value">v2.0</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 1 · THE STATE WE'RE IN ───────────────────────── -->
+<section class="slide">
+  <div class="slide-meta">
+    <span class="eyebrow">01 · Where we are</span>
+    <span class="counter">i / x</span>
+  </div>
+
+  <h2 class="section-title">Last quarter we ran 600 projects.<br>Most of them, <em>no one watched.</em></h2>
+  <p class="lede" style="margin-bottom: 40px;">Mindvalley is a $108M company at <strong>9% EBITDA</strong>. To grow EBITDA we don't need more projects — we need fewer of them, executed by the right people. Last quarter's data says we are doing the opposite. 600 projects sounds like productivity. It is sprawl. Forty percent of people never reported into OKRs at all — we don't know what they did. Of the OKRs we could see, <strong>seventy percent failed.</strong> The healthy failure rate for stretch OKRs is roughly 30%; ours is more than double. That is not ambition. That is misalignment.</p>
+
+  <div class="stat-row">
+    <div class="stat">
+      <div class="label">Projects last quarter</div>
+      <div class="value red">600</div>
+      <div class="delta">No consistent map to priorities · sprawl, not focus</div>
+    </div>
+    <div class="stat">
+      <div class="label">No OKR check-in</div>
+      <div class="value red">40%</div>
+      <div class="delta">Of all owners · invisible work · we can't manage what we can't see</div>
+    </div>
+    <div class="stat">
+      <div class="label">OKRs that failed</div>
+      <div class="value red">70%</div>
+      <div class="delta">vs. healthy 30% · more than double the expected miss rate</div>
+    </div>
+    <div class="stat">
+      <div class="label">EBITDA</div>
+      <div class="value red">9%</div>
+      <div class="delta">$108M revenue · the constraint we are here to fix</div>
+    </div>
+  </div>
+
+  <div class="callout red">
+    <div class="callout-label">The pattern that costs us focus</div>
+    <div class="callout-body">
+      Six hundred projects, forty percent invisible, seventy percent failing. This is not an execution problem on any single team — it is a structural problem with the operating model. We are running a $108M business with the project discipline of a startup that hasn't yet decided what it is. Until we cut that down to a list we can actually run, no individual team's effort will compound into company-level results.
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 2 · EBITDA GROWS BY CONCENTRATION ────────────── -->
+<section class="slide">
+  <div class="slide-meta">
+    <span class="eyebrow">02 · The thesis</span>
+    <span class="counter">ii / x</span>
+  </div>
+
+  <h2 class="section-title">EBITDA grows by <em>concentration</em>,<br>not by activity.</h2>
+  <p class="lede" style="margin-bottom: 40px;">A 9% EBITDA business at $108M cannot grow margin by adding more work. It grows margin by removing work that doesn't move the needle, and concentrating capacity on work that does. That is the entire reason for this proposal. Not a re-org. Not a re-brand. A re-allocation of where Mindvalley's people spend their week.</p>
+
+  <div class="numbered-list">
+    <div class="numbered-item">
+      <div class="num">1</div>
+      <div class="body">
+        <h4>Cut unnecessary projects.</h4>
+        <p>If a project doesn't directly support one of the 14, it is a candidate for elimination — not deferral, not "next quarter," not "we'll get to it." Cut. The default disposition for an unmapped project is <em>stopped this week</em>, with the burden of proof on keeping it.</p>
+      </div>
+    </div>
+    <div class="numbered-item">
+      <div class="num">2</div>
+      <div class="body">
+        <h4>Concentrate the people we have.</h4>
+        <p>The non-supporting work is our redeploy pool. Most "we don't have capacity" complaints in this company are not capacity problems — they are misallocation problems. Once we know who is currently spending their week on work that doesn't move the 14, we can move them to the work that does.</p>
+      </div>
+    </div>
+    <div class="numbered-item">
+      <div class="num">3</div>
+      <div class="body">
+        <h4>Identify the core team.</h4>
+        <p>By the end of this audit, we will know — by name — who is on the critical path of the 14, who enables them, and who is doing work the company does not need right now. That answers the harder structural questions about cost, capacity, and EBITDA. We can't make those decisions until we can see the picture.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout accent" style="margin-top: 32px;">
+    <div class="callout-label">The test, every project, every person, every meeting</div>
+    <div class="callout-body">
+      Does this move one of the 14 forward? If yes — name how, name by when. If no — it is either a candidate for cut or a candidate for redeploy. <strong>There is no third answer.</strong>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 3 · THE 14 ───────────────────────────────────── -->
+<section class="slide">
+  <div class="slide-meta">
+    <span class="eyebrow">03 · The list</span>
+    <span class="counter">iii / x</span>
+  </div>
+
+  <h2 class="section-title">The 14 projects that <em>move the needle.</em></h2>
+  <p class="lede" style="margin-bottom: 32px;">Identified with Rafay across five divisions. This list may grow by two or three — but it will not grow to fifty. Everything else is a candidate for cut or redeploy. <strong>This is the canonical list.</strong></p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width: 18%;">Division</th>
+        <th>Project</th>
+        <th>Owner</th>
+        <th>Status</th>
+        <th>Progress</th>
+        <th>Due</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td rowspan="6" style="font-weight:700; vertical-align: top;">Growth <span class="chip ghost" style="margin-left:6px;">6</span></td>
+        <td><strong>Accelerator Evergreen Strategy</strong><br><span style="color:var(--muted); font-size:12px;">Academy Marketing</span></td>
+        <td>Wendy Boo</td><td><span class="chip amber">In Progress</span></td><td><span class="rag-red">0%</span></td><td>—</td>
+      </tr>
+      <tr>
+        <td><strong>Launch &amp; Scale Manifesting Pathway</strong><br><span style="color:var(--muted); font-size:12px;">Membership Marketing</span></td>
+        <td>Shubham Semwal</td><td><span class="chip amber">In Progress</span></td><td><span class="rag-green">93%</span></td><td>Jun 30</td>
+      </tr>
+      <tr>
+        <td><strong>Launch &amp; Scale Speaking Pathway</strong><br><span style="color:var(--muted); font-size:12px;">Membership Marketing</span></td>
+        <td>Shubham Semwal</td><td><span class="chip amber">In Progress</span></td><td><span class="rag-red">0%</span></td><td>Jun 30</td>
+      </tr>
+      <tr>
+        <td><strong>Launch &amp; Scale Exponential Entrepreneur Pathway</strong><br><span style="color:var(--muted); font-size:12px;">Membership Marketing</span></td>
+        <td>Harri Vishnu</td><td><span class="chip amber">In Progress</span></td><td><span class="rag-amber">11%</span></td><td>Jun 30</td>
+      </tr>
+      <tr>
+        <td><strong>Entrepreneurship + AI Summit &amp; Mastery</strong><br><span style="color:var(--muted); font-size:12px;">Academy Marketing</span></td>
+        <td>Jaideep Chagger</td><td><span class="chip red">Not Started</span></td><td><span class="rag-red">0%</span></td><td>—</td>
+      </tr>
+      <tr>
+        <td><strong>Launch &amp; Scale Longevity Pathway</strong><br><span style="color:var(--muted); font-size:12px;">Membership Marketing</span></td>
+        <td>Harri Vishnu</td><td><span class="chip red">Not Started</span></td><td><span class="rag-red">0%</span></td><td>Jun 30</td>
+      </tr>
+
+      <tr><td rowspan="3" style="font-weight:700; vertical-align: top;">Academy <span class="chip ghost" style="margin-left:6px;">3</span></td>
+        <td><strong>Manifesting Summit &amp; Mastery 2026</strong><br><span style="color:var(--muted); font-size:12px;">Academy (general)</span></td>
+        <td>Janja Živko</td><td><span class="chip amber">In Progress</span></td><td><span class="rag-amber">9%</span></td><td><strong>May 15</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Longevity Summit &amp; Mastery 2026</strong><br><span style="color:var(--muted); font-size:12px;">Academy (general)</span></td>
+        <td>Janja Živko</td><td><span class="chip red">Not Started</span></td><td><span class="rag-red">0%</span></td><td>—</td>
+      </tr>
+      <tr>
+        <td><strong>Speaking + Social Media Summit &amp; Mastery 2026</strong><br><span style="color:var(--muted); font-size:12px;">Academy (general)</span></td>
+        <td>Janja Živko</td><td><span class="chip red">Not Started</span></td><td><span class="rag-red">0%</span></td><td>—</td>
+      </tr>
+
+      <tr><td rowspan="1" style="font-weight:700; vertical-align: top;">Events <span class="chip ghost" style="margin-left:6px;">1</span></td>
+        <td><strong>Future Human United States Event</strong><br><span style="color:var(--muted); font-size:12px;">Events</span></td>
+        <td>Eni Selfo</td><td><span class="chip red">Blocked</span></td><td><span class="rag-red">0%</span></td><td>—</td>
+      </tr>
+
+      <tr><td rowspan="2" style="font-weight:700; vertical-align: top;">Product <span class="chip ghost" style="margin-left:6px;">2</span></td>
+        <td><strong>Freemium Experience on Mindvalley App</strong><br><span style="color:var(--muted); font-size:12px;">Product (general)</span></td>
+        <td>Dario Bianchi</td><td><span class="chip red">Not Started</span></td><td><span class="rag-red">0%</span></td><td>—</td>
+      </tr>
+      <tr>
+        <td><strong>Revamp mindvalley.com for Pathways</strong><br><span style="color:var(--muted); font-size:12px;">Product (general)</span></td>
+        <td>Dario Bianchi</td><td><span class="chip red">Not Started</span></td><td><span class="rag-red">0%</span></td><td>—</td>
+      </tr>
+
+      <tr><td rowspan="2" style="font-weight:700; vertical-align: top;">Marketing <span class="chip ghost" style="margin-left:6px;">2</span></td>
+        <td><strong>SEO &amp; Advertorial Content Strategy</strong><br><span style="color:var(--muted); font-size:12px;">SEO</span></td>
+        <td>Karolina Waligora</td><td><span class="chip red">Not Started</span></td><td><span class="rag-red">0%</span></td><td>—</td>
+      </tr>
+      <tr>
+        <td><strong>Social Media Organic Growth Strategy</strong><br><span style="color:var(--muted); font-size:12px;">Social Media / Communications</span></td>
+        <td>Will Paddison</td><td><span class="chip red">Not Started</span></td><td><span class="rag-red">0%</span></td><td>—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top: 16px; font-size: 14px; color: var(--muted);"><em>Source:</em> mission.mindvalley.team — priority projects view, identified with Rafay.</p>
+</section>
+
+<!-- ─── SLIDE 4 · THREE OUTCOMES ───────────────────────────── -->
+<section class="slide">
+  <div class="slide-meta">
+    <span class="eyebrow">04 · What success looks like</span>
+    <span class="counter">iv / x</span>
+  </div>
+
+  <h2 class="section-title">By the end of this initiative,<br>we know <em>three things.</em></h2>
+
+  <div class="numbered-list">
+    <div class="numbered-item">
+      <div class="num">1</div>
+      <div class="body">
+        <h4>The core projects we're driving — to move cash to bank.</h4>
+        <p>The 14 priorities, ratified by execs, are the company's core projects this quarter. They are what move cash to bank. Every other project across the company either supports one of the 14 — or it is a candidate for cut. <em>One canonical list. One direction.</em></p>
+      </div>
+    </div>
+    <div class="numbered-item">
+      <div class="num">2</div>
+      <div class="body">
+        <h4>The core team pushing those projects forward.</h4>
+        <p>Named. Per priority, who's doing what. The contributors on the 14 are the people pushing the major initiatives forward — and by the end of the audit, every one of them is clear on what their work delivers to cash and bank, <em>in dollars, not abstractions.</em> Shubham knows that Manifesting Pathway launching by Jun 30 means a specific number landing in the account.</p>
+      </div>
+    </div>
+    <div class="numbered-item">
+      <div class="num">3</div>
+      <div class="body">
+        <h4>The redeploy pool — moved to cash-generating work no one is doing today.</h4>
+        <p>Everyone not on the core projects is the redeploy pool. They get moved onto cash-generating initiatives that aren't getting any attention right now — <strong>affiliates ($1M revenue we're not earning), community ($1.5M in refunds we're not preventing), B2B (no one selling AI Mastery to B2B today)</strong> — and other opportunities the executive team identifies. These are dollars sitting on the table because no one currently owns them.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout accent" style="margin-top: 32px;">
+    <div class="callout-label">The output, in one sentence</div>
+    <div class="callout-body">
+      The core team driving the 14 — and the redeploy pool funding the cash-generating work no one is doing today.
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 5 · HOW — EACH EXEC RUNS IT ──────────────────── -->
+<section class="slide">
+  <div class="slide-meta">
+    <span class="eyebrow">05 · How it works</span>
+    <span class="counter">v / x</span>
+  </div>
+
+  <h2 class="section-title">How — <em>each exec runs it<br>for their team.</em></h2>
+  <p class="lede" style="margin-bottom: 32px;">Each exec runs the audit for their division. Same four steps for everyone, two-week timeline. At the end, <strong>one OKR review</strong> where the executive team confirms everyone is on the right things. After that, ongoing OKR management is each exec's own job.</p>
+
+  <div class="numbered-list">
+    <div class="numbered-item">
+      <div class="num">1</div>
+      <div class="body">
+        <h4>Map your team's projects and sub-projects to the core projects. <span class="mono-tag">Week 1</span></h4>
+        <p>Most teams are supporting teams — your projects and sub-projects have to map upward to one of the core projects they support. If something doesn't map, it's a candidate for cut. Share the map with your whole team so everyone sees how their work connects.</p>
+      </div>
+    </div>
+    <div class="numbered-item">
+      <div class="num">2</div>
+      <div class="body">
+        <h4>Name the core team, the adjacent team, and the redeployed team. <span class="mono-tag">Week 1</span></h4>
+        <p><strong>Core team:</strong> named owner of a priority sub-project, end to end. <strong>Adjacent team:</strong> enabling work the core projects depend on. <strong>Redeployed team:</strong> neither. Name each person. If someone is nominally on a priority but not owning a sub-project, they're floating — they go to the redeployed team.</p>
+      </div>
+    </div>
+    <div class="numbered-item">
+      <div class="num">3</div>
+      <div class="body">
+        <h4>Make a list of the redeployed team and bring it to the executives. <span class="mono-tag">Week 2</span></h4>
+        <p>You don't redistribute alone. Bring the redeploy list — names, current work, possible moves — to the executive team. <em>We decide together where each person goes.</em></p>
+      </div>
+    </div>
+    <div class="numbered-item">
+      <div class="num">4</div>
+      <div class="body">
+        <h4>One OKR review — confirm everyone is on the right things. <span class="mono-tag">End of Week 2</span></h4>
+        <p>After the audit, the executive team holds <strong>one OKR review together.</strong> Each exec walks through their team's OKRs — confirming every person is owning the right sub-project, supporting the right priority, or properly redeployed. <em>Going forward, ongoing OKR management is each exec's job for their own team. The collective review happens once — to verify alignment.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout green" style="margin-top: 32px;">
+    <div class="callout-label">Each person owns one sub-project — and is accountable</div>
+    <div class="callout-body">
+      <strong>Task:</strong> Pavel writes emails for the 90-day journey.<br>
+      <strong>Ownership:</strong> Pavel <em>owns 90-day LTV</em> — for members and non-members. He looks at the entire 90-day journey: how people are onboarded, what they're upsold (accelerator, full membership, other products), how to get them to purchase the right thing at the right time. <em>His job is to grow 90-day LTV. The metric is his.</em><br><br>
+      That is the bar. <strong>One owner per sub-project — named, accountable, end to end.</strong>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 6 · THE CORE TEAM + REDEPLOY TARGETS ─────────── -->
+<section class="slide">
+  <div class="slide-meta">
+    <span class="eyebrow">06 · The result</span>
+    <span class="counter">vi / x</span>
+  </div>
+
+  <h2 class="section-title">The result: <em>the core team —<br>and where redeploy goes.</em></h2>
+  <p class="lede" style="margin-bottom: 32px;">When every exec finishes the four steps, three columns exist company-wide. Two are about how the 14 actually ship. The third is concrete dollars Mindvalley is leaving on the table because no one currently owns it.</p>
+
+  <div class="grid-3">
+    <div class="tier green">
+      <div class="tier-tag">Column 1 · The engine</div>
+      <h4>Core</h4>
+      <ul>
+        <li><strong>Definition:</strong> owns one of the priority sub-projects end to end — accountable for strategy, execution, and results.</li>
+        <li><strong>Investment:</strong> protect, unblock, do not interrupt with non-priority work.</li>
+        <li><strong>Watch for:</strong> single points of failure (e.g., Janja owning 3 summits).</li>
+        <li><strong>Outcome:</strong> the names that must be present for Q2 to ship.</li>
+      </ul>
+    </div>
+    <div class="tier accent">
+      <div class="tier-tag">Column 2 · The floor</div>
+      <h4>Adjacent</h4>
+      <ul>
+        <li><strong>Definition:</strong> enabling work the 14 depends on (legal, IT, finance ops, infra).</li>
+        <li><strong>Investment:</strong> maintain, optimize, automate where possible.</li>
+        <li><strong>Watch for:</strong> "we serve everyone" claims that aren't verified by recipients.</li>
+        <li><strong>Outcome:</strong> the named functions Mindvalley needs to keep the lights on.</li>
+      </ul>
+    </div>
+    <div class="tier red">
+      <div class="tier-tag">Column 3 · The open question</div>
+      <h4>Redeploy</h4>
+      <ul>
+        <li><strong>Definition:</strong> &lt;20% of week on the 14, no enabling tie.</li>
+        <li><strong>Investment:</strong> a decision in 30 days — move them or have a different conversation.</li>
+        <li><strong>Watch for:</strong> protecting individuals through ambiguity. Name the work, not the person.</li>
+        <li><strong>First destinations:</strong> affiliates, community, B2B — examples below.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px; margin-bottom: 8px;">Where redeploy can go — three examples</h3>
+  <p style="font-size: 16px; color: var(--muted); margin-bottom: 20px; max-width: 900px;">Three functions where Mindvalley currently has no owner, with cash impact attached. <em>This is not the full list — these are illustrative.</em> The executive team identifies more as redeploys come in. The point is the math: these are dollars sitting on the table because no one is currently doing the work.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Function</th>
+        <th>Today</th>
+        <th>Annual cash impact</th>
+        <th>What's needed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Affiliates</strong></td>
+        <td>No one running it</td>
+        <td><span class="rag-green">+$1M revenue this year</span></td>
+        <td>Owner + ops support</td>
+      </tr>
+      <tr>
+        <td><strong>Community manager</strong></td>
+        <td>Vacant</td>
+        <td><span class="rag-green">+$1.5M refunds prevented</span></td>
+        <td>Community lead embedded with Masteries</td>
+      </tr>
+      <tr>
+        <td><strong>B2B (AI Mastery)</strong></td>
+        <td>Literally no one in B2B today</td>
+        <td><span class="rag-amber">TBD — meaningful revenue from one resource selling AI Mastery to B2B</span></td>
+        <td>One dedicated owner focused on AI Mastery B2B</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--hairline); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);">
+    From these three examples alone <span style="color: var(--green); font-weight: 700;">≈ $2.5M</span> before B2B · the redeploy column funds itself · more to be identified
+  </div>
+
+  <div class="callout green" style="margin-top: 32px;">
+    <div class="callout-label">Why this is the EBITDA conversation</div>
+    <div class="callout-body">
+      We can't grow EBITDA from 9% by selling more — sales acquisition is already cash-negative on most channels. EBITDA grows by removing the cost of work that doesn't move the bank balance, and by moving capacity to functions where the cash <em>already exists</em> but no one is collecting it. <strong>$1M of affiliate revenue we're not earning. $1.5M of refunds we're not preventing. B2B revenue we're not pursuing.</strong> The redeploy column is the EBITDA question made visible — and it has examples we can already point to.
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 7 · THE RHYTHM ───────────────────────────────── -->
+<section class="slide">
+  <div class="slide-meta">
+    <span class="eyebrow">07 · The rhythm</span>
+    <span class="counter">vii / x</span>
+  </div>
+
+  <h2 class="section-title">The rhythm: <em>Daily Huddle,<br>Tuesday and Thursday in office.</em></h2>
+  <p class="lede" style="margin-bottom: 32px;">Once the core team is named, naming isn't enough. The contributors on the 14 need to operate as one execution machine — in daily contact, in the same room twice a week. <strong>The rhythm IS the integration.</strong></p>
+
+  <div class="numbered-list">
+    <div class="numbered-item">
+      <div class="num">1</div>
+      <div class="body">
+        <h4>Contributors report in the Daily Huddle.</h4>
+        <p>The Daily Huddle is already where tactical information moves at Mindvalley — and a lot is shared. The change is small but specific: <strong>every contributor on the 14 attends, and the priority projects get an update from the person doing the work, not a layer up.</strong> If Shubham owns Manifesting Pathway, Shubham reports. The Daily Huddle becomes the live, daily picture of where the 14 stand — visible to the whole company.</p>
+      </div>
+    </div>
+    <div class="numbered-item">
+      <div class="num">2</div>
+      <div class="body">
+        <h4>Office presence — Tuesday and Thursday.</h4>
+        <p>Contributors come to the office <strong>Tuesday and Thursday</strong>, every week. Pathway launches need Product in the room with Marketing. Summits need Academy in the room with Events. Not because remote doesn't work generally — because the 14 require cross-team coordination that doesn't happen well in DMs. Two days a week, in person, together — and that's how culture gets built around the work.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout green" style="margin-top: 32px;">
+    <div class="callout-label">Why the rhythm matters</div>
+    <div class="callout-body">
+      The 14 are not fourteen separate projects — they are one execution machine with cross-dependencies. Pathway launches need the .com revamp. Summits feed Mastery launches. Without daily contact among contributors, those dependencies surface as missed deadlines instead of unblock requests. <strong>The Daily Huddle catches the dependency early. Tuesday and Thursday lets us close it in person — and builds the camaraderie that makes the team want to ship together.</strong>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 8 · TIMELINE ─────────────────────────────────── -->
+<section class="slide">
+  <div class="slide-meta">
+    <span class="eyebrow">08 · Timeline</span>
+    <span class="counter">viii / x</span>
+  </div>
+
+  <h2 class="section-title">Two weeks to a <em>different operating model.</em></h2>
+  <p class="lede" style="margin-bottom: 32px;">This is not a quarter-long initiative. The forcing function only works if the timeline is short and the deadlines are public. Slow audits become political audits. We move in two weeks and accept a v1 we can iterate on.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Week</th>
+        <th>What each exec does</th>
+        <th>Output</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Week 1</strong></td>
+        <td>Map projects + name your team</td>
+        <td>Project map shared with your whole team (each project marked Supports / Enables / Cut). People named (core / adjacent / redeploy). Subprojects under the 14 surfaced and owned. Manager-attested.</td>
+      </tr>
+      <tr>
+        <td><strong>Week 2</strong></td>
+        <td>Bring redeploy list to exec team + one OKR review with execs; rhythm live</td>
+        <td>Redeploy list surfaced — exec team decides redistribution collectively (affiliates / community / B2B / unattended cash work). One OKR review confirms everyone is on the right things. Core team list delivered to Vishen. Daily Huddle reporting + Tue/Thu office in effect.</td>
+      </tr>
+      <tr style="background: rgba(10,10,10,0.04);">
+        <td><strong>Ongoing</strong></td>
+        <td>OKR management = each exec's own job</td>
+        <td>After the alignment review, each exec runs OKRs for their own team. Not a collective exec ritual.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout accent" style="margin-top: 32px;">
+    <div class="callout-label">The status quo is the alternative</div>
+    <div class="callout-body">
+      Six hundred projects, forty percent invisible, seventy percent failing. If we do not change the operating model, this is what next quarter looks like, and the quarter after that. The cost of not doing this is a 9% EBITDA business that stays at 9% — or worse. <strong>The cost of doing this is two weeks of attested audits and one harder conversation about the redeploy column.</strong>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 9 · FOUR ASKS ────────────────────────────────── -->
+<section class="slide">
+  <div class="slide-meta">
+    <span class="eyebrow">09 · What changes this week</span>
+    <span class="counter">ix / x</span>
+  </div>
+
+  <h2 class="section-title">Four asks of <em>this room.</em></h2>
+
+  <div class="numbered-list" style="margin-top: 40px;">
+    <div class="numbered-item">
+      <div class="num">1</div>
+      <div class="body">
+        <h4>Ratify the 14 — and one named owner per sub-project, end to end.</h4>
+        <p>The 14 are the canonical list. Under each, subprojects that have to ship — <em>accelerators, upsells, content, ops.</em> <strong>Every sub-project gets one named owner — accountable for strategy, execution, and results.</strong> Not contributing. Not doing one piece. <em>Owning.</em> The owner is the person who wakes up thinking about that sub-project, identifies what's broken, proposes the fix, and drives it through to results. The 14 stays canonical; subprojects flow underneath; each has a name next to it.</p>
+      </div>
+    </div>
+    <div class="numbered-item">
+      <div class="num">2</div>
+      <div class="body">
+        <h4>Run the two-week audit for your team.</h4>
+        <p>By end of <strong>Week 1:</strong> projects + sub-projects mapped to the core projects (shared with your whole team), and your team named (core / adjacent / redeployed). By end of <strong>Week 2:</strong> the redeployed list brought to the executive team — we decide redistribution together. Manager-attested. Default for any non-submission = "Cut." No exceptions.</p>
+      </div>
+    </div>
+    <div class="numbered-item">
+      <div class="num">3</div>
+      <div class="body">
+        <h4>One OKR review — to confirm everyone is on the right things.</h4>
+        <p>After the two-week audit, the executive team holds <strong>one OKR review together.</strong> Each exec walks through their team's OKRs to confirm every person is working on the right things — owning a core sub-project, supporting one, or properly redeployed. <em>Going forward, ongoing OKR management is each exec's responsibility for their own team. We do this once, to verify alignment.</em></p>
+      </div>
+    </div>
+    <div class="numbered-item">
+      <div class="num">4</div>
+      <div class="body">
+        <h4>Your core team is in the Daily Huddle — and in the office Tuesday and Thursday.</h4>
+        <p>Contributors on the 14 attend the Daily Huddle and report on their projects directly. They come to the office <strong>Tuesday and Thursday</strong>, every week. Camaraderie is built in person; the 14 ship faster when the people on them know each other.</p>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+
+</div><!-- /.deck -->
+
+<div class="kbd-hint">← → to navigate · ESC to close contents</div>
+
+<nav class="nav">
+  <button class="nav-btn" id="prev">← Previous</button>
+  <div class="nav-progress"><div class="nav-progress-fill" id="progress"></div></div>
+  <span class="nav-counter" id="counter">01 / 10</span>
+  <button class="nav-btn" id="next">Next →</button>
+</nav>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const tocToggle = document.getElementById('tocToggle');
+  const toc = document.getElementById('toc');
+  const tocItems = document.querySelectorAll('.toc-item');
+
+  let current = 0;
+
+  function goTo(i) {
+    if (i < 0 || i >= totalSlides) return;
+    slides[current].classList.remove('active');
+    slides[i].classList.add('active');
+    current = i;
+    update();
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  function update() {
+    const pct = ((current + 1) / totalSlides) * 100;
+    progress.style.width = pct + '%';
+    counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === totalSlides - 1;
+    tocItems.forEach((el, i) => el.classList.toggle('active', i === current));
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  tocToggle.addEventListener('click', () => toc.classList.toggle('open'));
+  tocItems.forEach((el, i) => {
+    el.addEventListener('click', () => {
+      goTo(i);
+      toc.classList.remove('open');
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+    if (e.key === 'Escape') toc.classList.remove('open');
+  });
+
+  update();
+</script>
+
+</body>
+</html>
